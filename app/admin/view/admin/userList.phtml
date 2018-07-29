@@ -1,0 +1,50 @@
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="/admin/adminuser/list">账号管理</a></li>
+    <li><a href="/admin/adminuser/edit">添加账号</a></li>
+  </ul>
+  <form action="{:url('Rbac/listorders')}" method="post" class="margin-top-20">
+    <table class="table table-hover table-bordered">
+      <thead>
+      <tr>
+        <th width="40">ID</th>
+        <th align="left">用户名</th>
+        <th align="left">昵称</th>
+        <th>角色</th>
+        <th width="160">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+	  <?php
+	  foreach ($adminUserList as $user)
+	  { ?>
+        <tr>
+          <td><?php echo $user['adminUserId'] ?></td>
+          <td><?php echo $user['username'] ?></td>
+          <td><?php echo $user['nickname'] ?></td>
+          <td><?php if (isset($userRoleList[$user['adminUserId']]))
+			  {
+
+				  foreach ($userRoleList[$user['adminUserId']] as $role)
+				  {
+					  echo '<span class="label label-primary">' . $roleList[$role['adminRoleId']]['roleName'] . '</span> ';
+				  }
+			  }
+			  ?></td>
+          <td>
+			  <?php if ($user['adminUserId'] == 1) { ?>
+                <a href="" disabled><font color="#cccccc">用户角色</font></a>
+                <a href="" disabled><font color="#cccccc">编辑</font></a>
+                <a href="" disabled><font color="#cccccc">删除</font></a>
+			  <?php } else { ?>
+                <a href="/admin/adminuser/setrole?id=<?php echo $user['adminUserId']; ?>">用户角色</a>
+                <a href="/admin/adminuser/edit?id=<?php echo $user['adminUserId']; ?>">编辑</a>
+                <a href="/admin/adminuser/delete?id=<?php echo $user['adminUserId']; ?>">删除</a>
+			  <?php } ?>
+          </td>
+        </tr>
+	  <?php } ?>
+      </tbody>
+    </table>
+  </form>
+</div>

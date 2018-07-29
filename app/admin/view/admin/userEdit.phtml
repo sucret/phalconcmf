@@ -1,0 +1,43 @@
+<ul class="nav nav-tabs">
+	<li role="presentation"><a href="/admin/adminuser/list">账号列表</a></li>
+	<?php if(empty($adminUser)){ ?>
+		<li role="presentation" class="active"><a href="#">添加账号</a></li>
+	<?php }else{ ?>
+		<li role="presentation" class="active"><a href="#">账号编辑</a></li>
+	<?php } ?>
+</ul>
+
+
+<form class="form-horizontal" method="post">
+	<input type="hidden" name="adminUserId"
+	       value="<?php echo isset($adminUser->adminUserId) ? $adminUser->adminUserId : ''; ?>">
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">用户名：</label>
+		<div class="col-sm-4">
+			<input type="text" name="username" value="<?php echo isset($adminUser->username) ? $adminUser->username : ''; ?>"
+			       class="form-control" id="inputEmail3">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">昵称：</label>
+		<div class="col-sm-4">
+			<input type="text" name="nickname" value="<?php echo isset($adminUser->nickname) ? $adminUser->nickname : ''; ?>"
+			       class="form-control" id="inputEmail3">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
+		<div class="col-sm-4">
+			<input type="text" name="password" value=""
+			       class="form-control" id="inputEmail3">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary">提交</button>
+		</div>
+	</div>
+</form>

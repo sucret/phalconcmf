@@ -1,0 +1,11 @@
+<div class="alert alert-danger" role="alert">
+  <strong>Warning!</strong>&nbsp;&nbsp;&nbsp;
+	<?php echo $msg; ?>&nbsp;&nbsp;&nbsp;
+  <a class="alert-link" href="javascript:history.back(-1)">将在3秒后返回，或者点击这里直接返回</a>
+</div>
+
+<script>
+  setTimeout(function () {
+    location.href = history.back(-1);
+  }, 3000);
+</script>

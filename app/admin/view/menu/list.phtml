@@ -1,0 +1,37 @@
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="/admin/menu/list">菜单列表</a></li>
+    <li><a href="/admin/menu/edit">添加菜单</a></li>
+  </ul>
+  <form method="post">
+    <table class="table table-hover table-bordered">
+      <thead>
+      <tr>
+        <th width="40">ID</th>
+        <th align="left">菜单名称</th>
+        <th align="left">控制器</th>
+        <th align="left">方法</th>
+        <th align="left">是否显示</th>
+        <th align="left">描述</th>
+        <th width="140">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+	  <?php foreach ($menuList as $menu) { ?>
+        <tr>
+          <td><?php echo $menu['menuId']; ?></td>
+          <td><?php echo $menu['menuDesc'] ?></td>
+          <td><?php echo $menu['controller'] ?></td>
+          <td><?php echo $menu['action'] ?></td>
+          <td><?php echo $menu['isShow'] ? '<span class="label label-primary">显示</span>' : '<span class="label label-danger">不显示</span>'; ?></td>
+          <td><?php echo $menu['description'] ?></td>
+          <td>
+            <a href="/admin/menu/edit?id=<?php echo $menu['menuId'] ?>">编辑</a> |
+            <a href="/admin/menu/delete?id=<?php echo $menu['menuId'] ?>">删除</a>
+          </td>
+        </tr>
+	  <?php } ?>
+      </tbody>
+    </table>
+  </form>
+</div>

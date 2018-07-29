@@ -1,0 +1,11 @@
+{
+  "require-dev": {
+    "squizlabs/php_codesniffer": "2.9.1",
+    "phalcon/dd": "v1.0.3",
+    "phalcon/ide-stubs": "*"
+  },
+  "require": {
+    "php-amqplib/php-amqplib": ">=2.6.1",
+    "fzaninotto/faker": "^1.8"
+  }
+}
