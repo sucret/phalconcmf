@@ -1,6 +1,6 @@
 <?php
 
-define('DEBUG', false);
+
 
 error_reporting(E_ALL);
 
@@ -50,7 +50,15 @@ try
 
 	echo $application->handle()
 	                 ->getContent();
+
 } catch (\Exception $ex)
 {
+	$message = '{code:' . $ex->getCode() . '->' . $ex->getMessage() . '} @' . str_replace(ROOT_PATH . '/',
+	                                                                                      '',
+	                                                                                      $ex->getFile()) . ':' . $ex->getLine();
+	$di->get('logger')
+	   ->log($message);
+
+
 	echo $ex->getMessage();
 }

@@ -1,48 +1,90 @@
 <?php
 
+use Phalcon\Logger\Formatter\Line as LineFormatter;
+
+
+$di->set('profiler',
+	function () {
+
+		return new  \Phalcon\Db\Profiler();
+
+	},
+	     true);
 
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
-$di->set('db', function () use ($config) {
+$di->set('db',
+	function () use ($config, $di) {
 
-	$dbConfig = $config->database->toArray();
-	$adapter  = $dbConfig['adapter'];
-	unset($dbConfig['adapter']);
+		$eventsManager = new \Phalcon\Events\Manager();
+		$dbConfig      = $config->database->toArray();
+		$adapter       = $dbConfig['adapter'];
+		unset($dbConfig['adapter']);
 
-	$class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
+		$class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
 
-	$conn = new $class($dbConfig);
-	if (DEBUG) {
-		$eventsManager = new Phalcon\Events\Manager();
-		$eventsManager->attach('db', function ($event, $connection) {
-			echo getTime() . " " . $connection->getSQLStatement() . '<br />';
-		});
+		$conn = new $class($dbConfig);
+
+		if (DEBUG)
+		{
+			$profiler = $di->get('profiler');
+
+			$eventsManager->attach('db',
+				function ($event, $conn) use ($profiler, $di) {
+
+					if ($event->getType() == 'beforeQuery')
+					{
+						//在sql发送到数据库前启动分析
+						$profiler->startProfile($conn->getSQLStatement());
+					}
+					if ($event->getType() == 'afterQuery')
+					{
+						//在sql执行完毕后停止分析
+						$profiler->stopProfile();
+						//获取分析结果
+						$profile = $profiler->getLastProfile();
+
+						//日志记录
+						$di->get('logger')
+						   ->info([
+							          'sql'   => $profile->getSQLStatement(),
+							          'start' => $profile->getInitialTime(),
+							          'end'   => $profile->getFinalTime(),
+							          'spend' => $profile->getTotalElapsedSeconds()
+						          ]);
+					}
+				});
+		}
+
 		$conn->setEventsManager($eventsManager);
-	}
-	return $conn;
-});
 
-$di->set('readdb', function () use ($config) {
-	$dbConfig = $config->readdb->toArray();
-	$adapter  = $dbConfig['adapter'];
-	unset($dbConfig['adapter']);
 
-	$class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
+		return $conn;
+	});
 
-	$conn = new $class($dbConfig);
-	if (DEBUG) {
-		$eventsManager = new Phalcon\Events\Manager();
-		$eventsManager->attach('readdb', function ($event, $connection) {
-			echo getTime() . " " . $connection->getSQLStatement() . '<br />';
-			// error_log(getTime() . " read " . $connection->getSQLStatement() . PHP_EOL, 3, APP_PATH.'/cache/readdb.log' );
+/**
+ * DI注册modelsManager服务
+ */
+$di->setShared('modelsManager',
+	function () use ($di) {
+		return new Phalcon\Mvc\Model\Manager();
+	});
 
-		});
-		$conn->setEventsManager($eventsManager);
-	}
-	return $conn;
-});
 
-$di->set('mq', function(){
+/**
+ * 注册日志
+ */
+$di->set('logger',
+	function () {
+		$logger    = new App\Common\Library\Logger(ROOT_PATH . '/log/' . date('Ymd') . '.log');
+		$formatter = new LineFormatter("[%date%]-[%type%]-[" . LOGGER_ID . "] %message%", 'Y-m-d H:i:s');
+		$logger->setFormatter($formatter);
 
-});
+		return $logger;
+	});
+
+$di->set('mq',
+	function () {
+
+	});

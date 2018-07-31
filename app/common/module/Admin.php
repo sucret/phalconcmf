@@ -21,7 +21,8 @@ class Admin implements ModuleDefinitionInterface
 
 		$loader->registerNamespaces([
 			                            'App\Admin\Controller' => ROOT_PATH . '/app/admin/controller',
-			                            'App\Common\Model'     => ROOT_PATH . '/app/common/model'
+			                            'App\Common\Model'     => ROOT_PATH . '/app/common/model',
+			                            'App\Common\Library'   => ROOT_PATH . '/app/common/library'
 		                            ]);
 		$loader->register();
 

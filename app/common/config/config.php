@@ -1,7 +1,11 @@
 <?php
 
+define('DEBUG', true);
+
+define('LOGGER_ID', sha1(uniqid('', true)));
+
 $config = [
-	'database'    => [
+	'database' => [
 		'adapter'  => 'Mysql',
 		'host'     => '172.17.0.5',
 		'username' => 'root',
@@ -10,7 +14,7 @@ $config = [
 		'charset'  => 'utf8mb4',
 		'port'     => 3306,
 	],
-	'readdb'      => [
+	'readdb'   => [
 		'adapter'  => 'Mysql',
 		'host'     => '172.17.0.5',
 		'username' => 'root',
