@@ -1,4 +1,12 @@
 {
+  "name": "sucret/phalconcms",
+  "description": "A simple PhalconCMS",
+  "authors": [
+    {
+      "name": "sucret",
+      "Email:": "sucret@163.com"
+    }
+  ],
   "require-dev": {
     "squizlabs/php_codesniffer": "2.9.1",
     "phalcon/dd": "v1.0.3",
