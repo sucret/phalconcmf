@@ -15,7 +15,7 @@ class Logger extends \Phalcon\Logger\Adapter\File
 		$backtrace = debug_backtrace(2, 2);
 		$file      = str_replace(ROOT_PATH . '/', '', $backtrace[1]['file']);
 
-		if (is_array($message))
+		if (is_array($message) || is_object($message))
 		{
 			$message = json_encode($message,
 			                       JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

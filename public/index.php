@@ -1,7 +1,6 @@
 <?php
 
 
-
 error_reporting(E_ALL);
 
 // Default Timezone
@@ -45,6 +44,10 @@ try
 		                              'admin' => [
 			                              'className' => 'App\Common\Module\Admin',
 			                              'path'      => ROOT_PATH . '/app/common/module/Admin.php'
+		                              ],
+		                              'api'   => [
+			                              'className' => 'App\Common\Module\Api',
+			                              'path'      => ROOT_PATH . '/app/common/module/Api.php'
 		                              ]
 	                              ]);
 

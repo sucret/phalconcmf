@@ -1,16 +1,11 @@
 {
   "name": "sucret/phalconcms",
   "description": "A simple PhalconCMS",
-  "authors": [
-    {
-      "name": "sucret",
-      "email:": "sucret@163.com"
-    }
-  ],
   "require-dev": {
     "squizlabs/php_codesniffer": "2.9.1",
     "phalcon/dd": "v1.0.3",
-    "phalcon/ide-stubs": "*"
+    "phalcon/ide-stubs": "*",
+    "eaglewu/swoole-ide-helper": "dev-master"
   },
   "require": {
     "php-amqplib/php-amqplib": ">=2.6.1",

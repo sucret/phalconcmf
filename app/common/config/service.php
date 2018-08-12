@@ -11,6 +11,15 @@ $di->set('profiler',
 	},
 	     true);
 
+$di->setShared('redis',
+	function () use ($config) {
+		$redis = new \Redis();
+		$redis->connect($config->redis->host, $config->redis->port);
+		$redis->auth($config->redis->password);
+
+		return $redis;
+	});
+
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
@@ -24,6 +33,9 @@ $di->set('db',
 
 		$class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
 
+		/**
+		 *
+		 */
 		$conn = new $class($dbConfig);
 
 		if (DEBUG)

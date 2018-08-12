@@ -22,6 +22,13 @@ $config = [
 		'dbname'   => 'phalconcmf',
 		'charset'  => 'utf8mb4',
 		'port'     => 3306,
+	],
+
+	'redis' => [
+		'host'     => '172.17.0.4',
+		'port'     => 6379,
+		'password' => 'sucret',
+		'dbindex'  => 0
 	]
 ];
 

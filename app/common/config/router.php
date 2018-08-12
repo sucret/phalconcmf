@@ -24,6 +24,22 @@ $di->set('router',
 		             ]);
 
 
+		$router->add('/api',
+		             [
+			             'module'     => 'api',
+			             'controller' => 'index',
+			             'action'     => 'index'
+		             ]);
+
+		$router->add('/api/:controller/:action/:params',
+		             [
+			             'module'     => 'api',
+			             'controller' => 1,
+			             'action'     => 2,
+			             'params'     => 3,
+		             ]);
+
+
 		//		$router->add('/:controller/:action/:params',
 		//		             [
 		//			             'module'     => 'api',
