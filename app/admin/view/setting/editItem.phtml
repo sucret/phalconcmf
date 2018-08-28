@@ -1,0 +1,53 @@
+<ul class="nav nav-tabs">
+	<li><a href="/admin/setting/detail?groupId=<?php if(isset($groupInfo)){echo $groupInfo['settingGroupId'];} ?>">设置详情</a></li>
+	<li><a href="/admin/setting/editGroup">添加设置组</a></li>
+	<li><a href="/admin/setting/editGroup?settingGroupId=<?php if(isset($groupInfo)){echo $groupInfo['settingGroupId'];} ?>">编辑当前设置组</a></li>
+	<li class="active"><a href="/admin/setting/editItem">添加设置</a></li>
+</ul>
+
+<form class="form-horizontal" method="post">
+	<input type="hidden" name="settingId" value="<?php if(isset($settingInfo)){echo $settingInfo['settingId'];} ?>">
+	<input type="hidden" name="settingGroupId" value="<?php if(isset($groupInfo)){echo $groupInfo['settingGroupId'];} ?>">
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">设置组名称：</label>
+		<div class="col-sm-4">
+			<input type="text" name="name" disabled value="<?php if(isset($groupInfo)){echo $groupInfo['name'];} ?>" class="form-control" id="inputEmail3">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">标题：</label>
+		<div class="col-sm-4">
+			<input type="text" name="title" value="<?php if(isset($settingInfo)){echo $settingInfo['title'];} ?>" class="form-control" id="inputEmail3">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">变量名：</label>
+		<div class="col-sm-4">
+			<input type="text" name="alias" value="<?php if(isset($settingInfo)){echo $settingInfo['alias'];} ?>" class="form-control" id="inputEmail3">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">值：</label>
+		<div class="col-sm-4">
+			<textarea class="form-control" name="value" rows="3"><?php if(isset($settingInfo)){echo $settingInfo['value'];} ?></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">描述：</label>
+		<div class="col-sm-4">
+			<textarea class="form-control" name="description" rows="3"><?php if(isset($settingInfo)){echo $settingInfo['description'];} ?></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary">提交</button>
+		</div>
+	</div>
+</form>
+
