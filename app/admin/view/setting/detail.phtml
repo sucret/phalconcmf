@@ -1,0 +1,71 @@
+<style>
+  ul.pagination {
+    margin: 0;
+  }
+
+  .settingList {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .settingDescription {
+    margin-bottom: 0;
+  }
+</style>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">设置详情</a></li>
+  <li><a href="/admin/setting/editGroup">添加设置组</a></li>
+  <li><a href="/admin/setting/editGroup?settingGroupId=<?php echo $currentGroupId; ?>">编辑当前设置组</a></li>
+  <li><a href="/admin/setting/editItem?settingGroupId=<?php echo $currentGroupId; ?>">添加设置</a></li>
+
+  <button type="button" class="btn btn-danger navbar-btn btn-sm pull-right"
+          style="margin-left: 14px;margin-right: 20px;">
+    <span class="glyphicon glyphicon-floppy-remove"></span>
+    删除当前设置组
+  </button>
+
+  <button type="button" class="btn btn-warning navbar-btn btn-sm pull-right"
+          style="margin-left: 14px;">
+    <span class="glyphicon glyphicon-repeat"></span>
+    更新所有设置
+  </button>
+
+  <button type="button" class="btn btn-primary navbar-btn btn-sm pull-right">
+    <span class="glyphicon glyphicon-saved"></span>
+    保存
+  </button>
+</ul>
+
+<nav class="settingList">
+	<?php foreach ($groupList as $group) { ?>
+      <ul class="pagination">
+        <li <?php if ($group['settingGroupId'] == $currentGroupId)
+		{
+			echo 'class="active"';
+		} ?>><a
+              href="/admin/setting/detail?groupId=<?php echo $group['settingGroupId']; ?>"><?php echo $group['name']; ?>
+            <span class="sr-only"></span></a></li>
+      </ul>
+	<?php } ?>
+</nav>
+
+<?php foreach ($settingList as $setting) { ?>
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <code><?php echo $setting['alias'] ?></code>
+        <a class="label label-danger pull-right" href="/admin/setting/deleteItem?settingId=<?php echo $setting['settingId'] ?>" role="button" style="margin-left:8px;">删除</a>
+        <a class="label label-default pull-right" href="/admin/setting/editItem?settingId=<?php echo $setting['settingId'] ?>&settingGroupId=<?php echo $currentGroupId; ?>" role="button">编辑</a>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <textarea class="form-control" rows="3"><?php echo $setting['value'] ?></textarea>
+        </div>
+        <div class="alert alert-info settingDescription" role="alert">
+          <strong><?php echo $setting['title'] ?>：</strong> <?php echo $setting['description'] ?>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php } ?>

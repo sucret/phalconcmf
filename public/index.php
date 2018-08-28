@@ -13,6 +13,10 @@ include ROOT_PATH . '/vendor/autoload.php';
 try
 {
 
+	include ROOT_PATH . '/app/common/config/constant.php';
+
+	include ROOT_PATH . '/app/common/config/function.php';
+
 	/**
 	 * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
 	 */
