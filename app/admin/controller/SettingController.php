@@ -158,6 +158,8 @@ class SettingController extends ControllerBase
 
 			$settingModel->save($data);
 
+			$this->updateCache($settingGroupId);
+
 			$this->response->redirect('admin/setting/detail?groupId=' . $settingGroupId);
 		}
 		else
@@ -190,10 +192,8 @@ class SettingController extends ControllerBase
 				{
 					return $this->displayError('设置组不存在');
 				}
+				$this->view->setVar('groupInfo', $groupInfo->toArray());
 			}
-
-			$this->view->setVar('groupInfo', $groupInfo->toArray());
-
 		}
 	}
 
@@ -225,5 +225,33 @@ class SettingController extends ControllerBase
 		}
 	}
 
+	/**
+	 * 更新所有缓存
+	 */
+	public function updateAllCacheAction()
+	{
+		$settingGroupList = SettingGroupModel::find();
 
+		foreach ($settingGroupList as $settingGroup)
+		{
+			$this->updateCache($settingGroup->settingGroupId);
+		}
+	}
+
+
+	/**
+	 * 缓存到hash表中
+	 */
+	private function updateCache($settingGroupId)
+	{
+
+		$settingList = SettingModel::find(["settingGroupId = $settingGroupId"])
+		                       ->toArray();
+
+		foreach ($settingList as $setting)
+		{
+			$this->redis->hSet('setting', $setting['alias'], $setting['value']);
+		}
+
+	}
 }

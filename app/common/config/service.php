@@ -5,7 +5,6 @@ use Phalcon\Logger\Formatter\Line as LineFormatter;
 
 $di->set('profiler',
 	function () {
-
 		return new  \Phalcon\Db\Profiler();
 
 	},
@@ -16,6 +15,7 @@ $di->setShared('redis',
 		$redis = new \Redis();
 		$redis->connect($config->redis->host, $config->redis->port);
 		$redis->auth($config->redis->password);
+		$redis->select($config->redis->dbindex);
 
 		return $redis;
 	});
@@ -68,9 +68,7 @@ $di->set('db',
 					}
 				});
 		}
-
 		$conn->setEventsManager($eventsManager);
-
 
 		return $conn;
 	});

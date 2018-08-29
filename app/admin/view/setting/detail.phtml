@@ -25,8 +25,8 @@
     删除当前设置组
   </button>
 
-  <button type="button" class="btn btn-warning navbar-btn btn-sm pull-right"
-          style="margin-left: 14px;">
+  <button type="button" id="updateCache" data-loading-text="更新中..." style="margin-left: 14px;"
+          class="btn btn-warning navbar-btn btn-sm pull-right" autocomplete="off">
     <span class="glyphicon glyphicon-repeat"></span>
     更新所有设置
   </button>
@@ -55,8 +55,12 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <code><?php echo $setting['alias'] ?></code>
-        <a class="label label-danger pull-right" href="/admin/setting/deleteItem?settingId=<?php echo $setting['settingId'] ?>" role="button" style="margin-left:8px;">删除</a>
-        <a class="label label-default pull-right" href="/admin/setting/editItem?settingId=<?php echo $setting['settingId'] ?>&settingGroupId=<?php echo $currentGroupId; ?>" role="button">编辑</a>
+        <a class="label label-danger pull-right"
+           href="/admin/setting/deleteItem?settingId=<?php echo $setting['settingId'] ?>" role="button"
+           style="margin-left:8px;">删除</a>
+        <a class="label label-default pull-right"
+           href="/admin/setting/editItem?settingId=<?php echo $setting['settingId'] ?>&settingGroupId=<?php echo $currentGroupId; ?>"
+           role="button">编辑</a>
       </div>
       <div class="panel-body">
         <div class="form-group">
@@ -69,3 +73,17 @@
     </div>
   </div>
 <?php } ?>
+
+
+<script>
+  $(function () {
+    $('#updateCache').click(function () {
+
+      var $btn = $('#updateCache').button('loading')
+
+      $.get("/admin/setting/updateAllCache", function () {
+        $btn.button('reset')
+      });
+    })
+  })
+</script>

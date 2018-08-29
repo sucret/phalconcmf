@@ -4,7 +4,6 @@ namespace App\Admin\Controller;
 
 class ControllerBase extends \Phalcon\Mvc\Controller
 {
-
 	public function onConstruct()
 	{
 		// 登录监测
