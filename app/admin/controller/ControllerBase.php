@@ -4,8 +4,19 @@ namespace App\Admin\Controller;
 
 class ControllerBase extends \Phalcon\Mvc\Controller
 {
+
+
+	/**
+	 * @var \Redis $redis
+	 */
+
+	public $redis;
+
 	public function onConstruct()
 	{
+		$this->redis = $this->getDI()
+		                    ->get('redis');
+
 		// 登录监测
 		if (!$this->checkLogin())
 		{
